@@ -44,4 +44,4 @@ Feel free to reach out to me through my social channels:
 *   [Email](dev.mrjunio@gmail.com)
 *   Happy to help!
 
-Please use this link to visit the actual project : https://mrjdevbe.github.io/MRJ-DEV/
+Please use this link to visit the actual project : https://ft-mrjunio.github.io/MRJ-CV/
