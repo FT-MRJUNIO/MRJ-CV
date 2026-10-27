@@ -1,0 +1,97 @@
+/* ==========================================================================
+   Horizontal Top Navigation Structural Layout
+   ========================================================================== */
+
+/* Main Container: Full width, keeps everything aligned */
+.nav-menu-container {
+    width: 100%;
+    display: flex;
+    overflow: hidden ; /* Prevents anything from leaking outside */
+}
+
+    .nav-menu-container nav {
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+        justify-content: space-between !important;
+        padding: 0 1rem !important;
+    }
+
+.nav-links-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    margin-left: 1.5rem;
+    flex: 0 1 auto; 
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+.menu-collapsed .nav-links-wrapper {
+    opacity: 0;
+    transform: scaleX(0);
+    visibility: hidden;
+    width: 0;
+    margin-left: 0;
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Pin Action Controller Button Placement
+   ========================================================================== */
+.nav-pin-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    color: #ffffff;
+    margin-left: 2rem;
+    flex-shrink: 0;
+}
+
+    .nav-pin-btn:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+        transform: scale(1.05);
+    }
+
+    .nav-pin-btn.is-pinned {
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .nav-pin-btn .bi {
+        margin-right: 0 !important;
+        font-size: 1.25rem;
+    }
+
+/* ==========================================================================
+   Utility Classes and Base Styles (Maintain original styling)
+   ========================================================================== */
+.nav-item {
+    font-size: 0.9rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    height: 2.5rem;
+    transition: transform 0.15s ease;
+}
+
+    .nav-logo-btn img {
+        height: 100%; 
+        width: auto;
+        max-width: 50px; 
+        object-fit: contain;
+        display: block;
+    }

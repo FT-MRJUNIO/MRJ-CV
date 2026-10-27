@@ -1,0 +1,79 @@
+﻿<div class="nav-menu-container">
+    <nav class="d-flex flex-row align-items-center w-100 @NavMenuCssClass">
+
+        <div class="nav-item brand-logo">
+            <button class="nav-logo-btn" @onclick="ToggleNavMenu" aria-label="Toggle Navigation Menu">
+                <img src="img/Mrj.png" alt="Logo" />
+            </button>
+        </div>
+
+        <div class="nav-links-wrapper">
+            <div class="nav-item">
+                <a class="nav-link" href="#home">
+                    <span class="bi bi-house-door-fill" aria-hidden="true"></span> Home
+                </a>
+            </div>
+
+            <div class="nav-item">
+                <a class="nav-link" href="#experience">
+                    <span class="bi bi-plus-square-fill" aria-hidden="true"></span> Experience
+                </a>
+            </div>
+
+            <div class="nav-item">
+                <a class="nav-link" href="#performance">
+                    <span class="bi bi-list-nested" aria-hidden="true"></span> Performance
+                </a>
+            </div>
+        </div>
+
+        <button class="nav-pin-btn ms-auto @(isPinned ? "is-pinned" : "")"
+                @onclick="ToggleNavbarPin"
+                aria-label="@(isPinned ? "Unpin Navigation" : "Pin Navigation")">
+            <span class="bi @(isPinned ? "bi-pin-angle-fill" : "bi-pin-angle")" aria-hidden="true"></span>
+        </button>
+
+    </nav>
+</div>
+
+@code {
+    [Inject] private IJSRuntime JS { get; set; } = default!;
+
+    private bool isMenuCollapsed = false;
+    private bool isPinned = false;
+
+    private string NavMenuCssClass => isMenuCollapsed ? "menu-collapsed" : "menu-expanded";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                isPinned = await JS.InvokeAsync<bool>("eval", "window.isNavbarPinned");
+                StateHasChanged();
+            }
+            catch
+            {
+            }
+        }
+    }
+
+    private void ToggleNavMenu()
+    {
+        isMenuCollapsed = !isMenuCollapsed;
+    }
+
+    private async Task ToggleNavbarPin()
+    {
+        isPinned = !isPinned;
+
+        try
+        {
+            await JS.InvokeVoidAsync("setNavbarPinState", isPinned);
+        }
+        catch
+        {
+        }
+    }
+}
