@@ -1,0 +1,128 @@
+﻿@page "/cv-viewRose"
+@inject IJSRuntime JS
+<PageTitle>Resume</PageTitle>
+<div class="cv-controls">
+    <label>
+        <input type="radio"
+               name="paper"
+               @onchange='() => paperSize = "a4"'
+               checked="@(paperSize == "a4")" />
+        A4
+    </label>
+
+    <label>
+        <input type="radio"
+               name="paper"
+               @onchange='() => paperSize = "a5"'
+               checked="@(paperSize == "a5")" />
+        A5
+    </label>
+
+    <label>
+        <input type="radio"
+               name="paper"
+               @onchange='() => paperSize = "letter"'
+               checked="@(paperSize == "letter")" />
+        Letter
+    </label>
+    <button class="cv-action-btn" @onclick="DownloadPaper">
+        <i class="bi bi-save"></i>
+    </button>
+</div>
+<div class="cv-wrapper">
+
+    <div class="cv-container">
+    <div class="cv-paper @paperSizeClass">
+
+                <header class="cv-header" style="display: flex; align-items: center; gap: 25px; text-align: left;">
+                    <div class="cv-profile-pic">
+                        <!-- Placeholder for profile image -->
+                        <img src="img/Rose.jpg" alt="Profile Picture" style="width: 120px; height: 120px; border-radius:50%; object-fit: cover;" />
+                        @* <div style="width: 120px; height: 120px; border-radius:50%; background-color: #ddd; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #fff;">RC</div> *@
+                    </div>
+
+                    <div style="flex: 1;">
+                        <h1 style="margin: 0;">ROSE ANN T. CEREZO</h1>
+                        <p style="margin: 5px 0;">Bambang, Nueva Vizcaya | (+63) 949 684 1820 | roseanncerezo19@gmail.com</p>
+                    </div>
+                </header>
+
+                <hr />
+
+                <section>
+                    <h2>Professional Summary</h2>
+                    <p>
+                        Detail-oriented and adaptable professional with a strong foundation in administrative operations, medical office support, and business management.
+                        Proven ability to maintain high standards of quality assurance, manage sensitive documentation, and coordinate logistics in fast-paced environments.
+                        Seeking to leverage strong communication skills and technical proficiency to contribute effectively to team objectives.
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Technical & Soft Skills</h2>
+                    <p class="skill-item"><strong>Software:</strong> Microsoft Office Suite (Word, Excel, PowerPoint)</p>
+                    <p class="skill-item"><strong>Operations:</strong> Administrative Oversight, Dispatch Management, Logistics Coordination, Quality Assurance</p>
+                    <p class="skill-item"><strong>Soft Skills:</strong> Communication, Critical Thinking, Time Management, Adaptability, Professionalism</p>
+                    <p class="skill-item"><strong>Languages:</strong> Ilocano, Tagalog, English</p>
+                </section>
+
+                <section>
+                    <h2>Work Experience</h2>
+
+                <h3>Medical Coordinator/Transmittal Clerk</h3>
+                <p class="muted">(Maritime Medical and Laboratory Clinic Inc.) Present </p>
+                    <ul>
+                    <li><strong>Medical Documentation:</strong> Responsible for receiving, compiling, and classifying medical results from various clinic sections, ensuring all significant clinical findings are accurately recorded.</li>
+                    <li><strong>Clinical Coordination:</strong> Facilitates the workflow by referring medical worksheets to the Medical Director for professional evaluation and timely sign-off.</li>
+                    <li><strong>Client Relations:</strong> Serves as a key point of contact for clients, providing professional assistance and accurate status updates regarding their medical examinations.</li>
+                    <li><strong>Administrative Oversight:</strong> Prepares and secures administrative approval for daily Transmittal Reports, ensuring all documentation meets quality standards before dispatch.</li>
+                    <li><strong>Workflow Reporting:</strong> Generates and maintains performance metrics and status updates (daily, weekly, and monthly) to track the throughput of medical results and laboratory reports.</li>
+                    </ul>
+
+                    <h3>Radiologic Technology Student Intern </h3>
+                <p class="muted">(Region II Trauma and Medical Center) 2023 </p>
+                    <ul>
+                        <li>Supported medical operations by assisting in radiologic procedures and patient coordination.</li>
+                        <li>Maintained high standards of patient care and documentation accuracy within a clinical setting.</li>
+                    </ul>
+
+                    <h3>Radiologic Technology Student Intern </h3>
+                    <p class="muted">(PLT-LAT Medical Center) 2022 </p>
+                    <ul>
+                        <li>Gained hands-on experience in medical facility workflows and clinical administrative processes.</li>
+                        <li>Collaborated with healthcare professionals to ensure efficient delivery of diagnostic services.</li>
+                    </ul>
+
+                    <h3>Work Immersion (Business Management)</h3>
+                    <p class="muted">2017</p>
+                    <ul>
+                        <li>Engaged in real-world tasks related to business operations, management, and decision-making under the guidance of experienced professionals.</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Education</h2>
+                    <p><strong>BS in Radiologic Technology (Student)</strong> | P.IT College Inc., Nueva Vizcaya (2018 – 2023)</p>
+                    <p><strong>Senior High School</strong> | King's College of the Philippines, Nueva Vizcaya (2016 – 2018)</p>
+                </section>
+           
+    </div>
+    </div>
+</div>
+
+@code {
+    private string paperSize = "letter";
+
+    private string paperSizeClass =>
+        paperSize switch
+        {
+            "a5" => "paper-a5",
+            "letter" => "paper-letter",
+            _ => "paper-a4"
+        };
+    private async Task DownloadPaper()
+    {
+        // Simply call the global function directly
+        await JS.InvokeVoidAsync("window.cvExporter.generatePDF");
+    }
+}

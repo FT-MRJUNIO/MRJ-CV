@@ -1,0 +1,85 @@
+﻿@page "/cv"
+@inject IJSRuntime JS
+@inject NavigationManager NavManager
+<PageTitle>Resume</PageTitle>
+
+<div class="container py-5 text-white">
+
+    <h2 class="mb-4 fw-bold">Resume</h2>
+    <p class="text-white-50 mb-4">
+        Choose a format to download your CV.
+    </p>
+
+    <div class="row g-4">
+
+        <!-- PLAIN CV -->
+        <div class="col-md-6">
+            <div class="card bg-dark border border-secondary h-100 shadow-sm">
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold text-white mb-2">Plain CV</h4>
+                    <br />
+
+                    <p class="text-white-50 small mb-4">
+                        Simple, ATS-friendly version. Best for HR systems and quick parsing.
+                    </p>                <br />
+                    <button class="btn btn-outline-info w-100"
+                            @onclick="DownloadPlainCv">
+                        <i class="bi bi-file-earmark-text me-2"></i>
+                        Download Plain CV
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- MODERN CV -->
+        <div class="col-md-6">
+            <div class="card bg-dark border border-info h-100 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <h4 class="fw-bold text-info mb-2">Modern CV</h4>
+                    <br />
+                    <p class="text-white-50 small mb-4">
+                        Styled version with better layout and design for portfolios and sharing.
+                    </p>
+
+                    <br />
+                    <button class="btn btn-info w-100"
+                            @onclick="DownloadModernCv">
+                        <i class="bi bi-stars me-2"></i>
+                        Download Modern CV
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@code {
+
+    private void DownloadPlainCv()
+    {
+        NavManager.NavigateTo("/MRJ-CV/cv-view");
+        // NavManager.NavigateTo("/cv-view");
+        // NavManager.NavigateTo("/cv-viewRose");
+        // NavManager.NavigateTo("/cv-viewJames");
+    }
+    private async Task DownloadModernCv()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("window.open", "img/Marlon.Junio-2026.pdf", "_blank");
+        }
+        catch (Exception ex)
+        {
+            // Log the error for debugging
+            Console.WriteLine($"Export failed: {ex.Message}");
+        }
+    }
+  
+}

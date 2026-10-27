@@ -1,0 +1,131 @@
+﻿@page "/cv-viewJames"
+@inject IJSRuntime JS
+
+<PageTitle>Resume - James Anthony T. Cerezo</PageTitle>
+
+<div class="cv-controls">
+    <label>
+        <input type="radio"
+               name="paper"
+               @onchange='() => paperSize = "a4"'
+               checked="@(paperSize == "a4")" />
+        A4
+    </label>
+
+    <label>
+        <input type="radio"
+               name="paper"
+               @onchange='() => paperSize = "a5"'
+               checked="@(paperSize == "a5")" />
+        A5
+    </label>
+
+    <label>
+        <input type="radio"
+               name="paper"
+               @onchange='() => paperSize = "letter"'
+               checked="@(paperSize == "letter")" />
+        Letter
+    </label>
+    <button class="cv-action-btn" @onclick="DownloadPaper">
+        <i class="bi bi-save"></i>
+    </button>
+</div>
+
+<div class="cv-wrapper">
+    <div class="cv-container">
+        <div class="cv-paper @paperSizeClass">
+            <header class="cv-header" style="display: flex; align-items: center; gap: 25px; text-align: left;">
+                <div class="cv-profile-pic">
+                    <img src="img/James1.jpg" alt="Profile Picture" style="width: 120px; height: 120px; border-radius:50%; object-fit: cover;" />
+                </div>
+                <div style="flex: 1;">
+                    <h1 style="margin: 0;">JAMES ANTHONY T. CEREZO</h1>
+                    <p style="margin: 5px 0;">Purok 3, Macate, Bambang, Nueva Vizcaya | 0969 155 5823 | jcerezo794@gmail.com</p>
+                    <p style="margin: 5px 0;">Facebook : James Cerezo</p>
+                </div>
+            </header>
+
+            <hr />
+
+            <section>
+                <h2>Objective</h2>
+                <p>To obtain a challenging position where I can apply the knowledge and skills I have acquired through my education and training, contribute to the achievement of organizational goals, and further enhance my professional growth.</p>
+            </section>
+
+            <section>
+                <h2>Work Experience & Internship</h2>
+                <h3>On-the-Job Trainee</h3>
+                <p class="muted"><strong>Department of Information and Communications Technology (DICT)</strong></p>
+                <ul>
+                    <li><strong>System Development:</strong> Assisted in the development and implementation of a digital logbook system to monitor and manage computer availability and workstation utilization.</li>
+                    <li><strong>Technical Support:</strong> Conducted basic network troubleshooting and hardware maintenance to ensure system reliability within the facility.</li>
+                    <li><strong>Customer Service:</strong> Provided frontline assistance to walk-in clients, managing inquiries and guiding users through government digital services and registration processes.</li>
+                    <li><strong>Operational Support:</strong> Supported agency staff in coordinating ICT development agenda initiatives and maintaining official record accuracy.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Education</h2>
+                <p><strong>BS in Computer Science</strong> | Nueva Vizcaya State University (2022 – 2026)</p>
+                <p><strong>BS in Information Technology</strong> | Nueva Vizcaya State University (2019 – 2020)</p>
+            </section>
+
+            <section>
+                <h2>Technical Skills & Proficiencies</h2>
+                <p class="skill-item"><strong>Systems & Logic:</strong> Logbook System Development, Inventory Tracking, Workflow Optimization</p>
+                <p class="skill-item"><strong>Technical Skills:</strong> Network Addressing, Troubleshooting, Hardware Configuration, Basic Cybersecurity</p>
+                <p class="skill-item"><strong>Service & Soft Skills:</strong> Frontline Customer Support, Stakeholder Communication, Adaptability, Working Under Pressure, Team Building</p>
+            </section>
+
+            <section>
+                <h2>Certifications & Training</h2>
+                <ul>
+                    <li>Network Addressing and Basic Troubleshooting</li>
+                    <li>Networking Devices and Initial Configurations</li>
+                    <li>JavaScript Essentials 1</li>
+                    <li>Introduction to Cybersecurity</li>
+                    <li>Computer Hardware Basics</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Seminars & Conferences</h2>
+                <ul>
+                    <li>The Rise of the Machines: Exploring the Wonders and Perils of Artificial Intelligence</li>
+                    <li>Internet of Things (IoT) | Emerging Technologies</li>
+                    <li>Intellectual Property Seminar-Workshop | Networking Basics</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Personal Details</h2>
+                <p><strong>Date of Birth:</strong> 11/02/2000 | <strong>Gender:</strong> Male | <strong>Nationality:</strong> Filipino</p>
+                <p><strong>Religion:</strong> Born Again Christian | <strong>Marital Status:</strong> Single</p>
+            </section>
+
+            <section>
+                <h2>References</h2>
+                <p><strong>Irel V. Derije</strong> – Program Chair, Computer Science, Nueva Vizcaya State University</p>
+                <p><strong>Vilma M. Santos</strong> – Dean, College of Industrial Technology, Nueva Vizcaya State University</p>
+            </section>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string paperSize = "letter";
+
+    private string paperSizeClass =>
+        paperSize switch
+        {
+            "a5" => "paper-a5",
+            "letter" => "paper-letter",
+            _ => "paper-a4"
+        };
+    private async Task DownloadPaper()
+    {
+        // Simply call the global function directly
+        await JS.InvokeVoidAsync("window.cvExporter.generatePDF");
+    }
+}

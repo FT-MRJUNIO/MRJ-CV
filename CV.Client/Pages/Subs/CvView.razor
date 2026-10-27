@@ -1,0 +1,153 @@
+﻿@page "/cv-view"
+@inject IJSRuntime JS
+<PageTitle>Resume</PageTitle>
+<div class="cv-controls">
+    <label>
+        <input type="radio"
+               name="paper"
+               @onchange='() => paperSize = "a4"'
+               checked="@(paperSize == "a4")" />
+        A4
+    </label>
+
+    <label>
+        <input type="radio"
+               name="paper"
+               @onchange='() => paperSize = "a5"'
+               checked="@(paperSize == "a5")" />
+        A5
+    </label>
+
+    <label>
+        <input type="radio"
+               name="paper"
+               @onchange='() => paperSize = "letter"'
+               checked="@(paperSize == "letter")" />
+        Letter
+    </label>
+    <button class="cv-action-btn" @onclick="DownloadPaper">
+        <i class="bi bi-save"></i>
+    </button>
+</div>
+<div class="cv-wrapper">
+
+    <div class="cv-container">
+    <div class="cv-paper @paperSizeClass">
+
+            <header class="cv-header" style="display: flex; align-items: center; gap: 25px; text-align: left;">
+                <div class="cv-profile-pic">
+                    <img src="img/Pic.jpg" alt="Profile Picture" style="width: 120px; height: 120px; border-radius:50%; object-fit: cover;" />
+                </div>
+
+                <div style="flex: 1;">
+                    <h1 style="margin: 0;">MARLON R. JUNIO</h1>
+                    <p style="margin: 5px 0;">Quezon City, Philippines | +639457221408 | ft.mrjunio@gmail.com </p>
+                    <p class="small" style="margin: 0;"> LinkedIn: linkedin.com/in/marlon-junio</p>
+                    <p class="small" style="margin: 0;"> GitHub: github.com/MrjDevBE</p>
+                    <p class="small" style="margin: 0;"> Portfolio: mrjdevbe.github.io/MRJ-DEV</p>
+                </div>
+            </header>
+                    
+                 
+
+        <hr />
+
+            <section>
+                <h2>Professional Summary</h2>
+                <p>
+                    Senior .NET Developer with 6+ years of experience designing,
+                    developing, and maintaining enterprise-grade web applications,
+                    RESTful APIs, and backend systems using .NET 8, ASP.NET Core,
+                    Entity Framework Core, and SQL Server.
+                    Experienced in Clean Architecture, Microservices, API Security,
+                    CI/CD pipelines, and modern software engineering practices.
+                    Proven ability to deliver scalable, secure, and maintainable
+                    solutions throughout the full Software Development Life Cycle (SDLC)
+                    within Agile environments.
+                </p>
+            </section>
+
+            <section>
+                <h2>Technical Skills</h2>
+
+                <p class="skill-item"><strong>Languages:</strong> C#, JavaScript, Python, SQL</p>
+
+                <p class="skill-item"><strong>Frameworks & Libraries:</strong> .NET 8, ASP.NET Core, ASP.NET MVC, Razor Pages, Blazor WebAssembly, Entity Framework Core, LINQ, jQuery, Bootstrap, MudBlazor</p>
+
+                <p class="skill-item"><strong>Architecture & Design:</strong> Clean Architecture, Microservices, SOLID Principles, Design Patterns, Dependency Injection, RESTful API Development</p>
+
+                <p class="skill-item"><strong>Security:</strong> JWT Authentication, Basic Authentication, OAuth 2.0, API Security, Authentication & Authorization</p>
+
+                <p class="skill-item"><strong>Databases:</strong> SQL Server, MySQL, Stored Procedures, Query Optimization, Database Design</p>
+
+                <p class="skill-item"><strong>Cloud & DevOps:</strong> Microsoft Azure, Docker, CI/CD, Azure DevOps, GitHub Actions, IIS Deployment, Release Management</p>
+
+                <p class="skill-item"><strong>Testing & Quality:</strong> Unit Testing, Code Reviews, Debugging, Performance Optimization</p>
+
+                <p class="skill-item"><strong>Tools:</strong> Visual Studio, Git, Postman, Swagger/OpenAPI, SSMS</p>
+
+                <p class="skill-item"><strong>Methodologies:</strong> Agile Scrum, SDLC, Enterprise Application Development</p>
+            </section>
+
+        <section>
+            <h2>Work Experience</h2>
+
+                <h3>Senior Developer | New San Jose Builder Inc.</h3>
+                <p class="muted">Feb 2025 – Present</p>
+                <ul>
+                    <li>Designed and developed enterprise ERP modules using ASP.NET Core, C#, and SQL Server.</li>
+                    <li>Implemented secure REST APIs with JWT Authentication and role-based authorization.</li>
+                    <li>Developed facial recognition solutions integrated with enterprise systems for employee verification.</li>
+                    <li>Applied Clean Architecture, SOLID principles, and Dependency Injection to improve maintainability and scalability.</li>
+                    <li>Managed IIS deployments and production releases while ensuring system stability and security compliance.</li>
+                </ul>
+
+            <h3>.NET Programmer | SLI Consulting Inc.</h3>
+            <p class="muted">July 2024 – Jan 2025</p>
+            <ul>
+                <li>Developed high-performance web applications from scratch using Razor Pages and Bootstrap.</li>
+                <li>Designed secure, maintainable database interactions utilizing SQL Server and complex stored procedures.</li>
+                <li>Collaborated in an Agile Scrum environment to deliver consistent project milestones.</li>
+            </ul>
+
+            <h3>Software Engineer | Rising Tide Digital Inc.</h3>
+            <p class="muted">Oct 2022 – June 2024</p>
+            <ul>
+                <li>Designed RESTful APIs using JavaScript and Visual Studio, resulting in a 30% improvement in data retrieval times.</li>
+                <li>Managed and queried SQL and NoSQL databases to support application scalability.</li>
+                <li>Conducted code reviews and provided technical feedback to ensure adherence to best practices.</li>
+                <li>Implemented project deliverables, including testing, debugging, and deploying releases.</li>
+            </ul>
+
+            <h3>Analyst Programmer | InSiteMy International Inc.</h3>
+            <p class="muted">June 2020 – Oct 2022</p>
+            <ul>
+                <li>Architected backend servers and database structures for web applications.</li>
+                <li>Ensured cross-platform compatibility and optimized responsive design for technical and consumer requirements.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Education</h2>
+            <p><strong>BS in Computer Science</strong> | St. Matthew College (2014 – 2018)</p>
+        </section>
+    </div>
+    </div>
+</div>
+
+@code {
+    private string paperSize = "letter";
+
+    private string paperSizeClass =>
+        paperSize switch
+        {
+            "a5" => "paper-a5",
+            "letter" => "paper-letter",
+            _ => "paper-a4"
+        };
+    private async Task DownloadPaper()
+    {
+        // Simply call the global function directly
+        await JS.InvokeVoidAsync("window.cvExporter.generatePDF");
+    }
+}

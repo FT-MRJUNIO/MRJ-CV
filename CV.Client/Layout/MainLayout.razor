@@ -1,0 +1,66 @@
+﻿@inherits LayoutComponentBase
+@inject IJSRuntime JS
+@inject NavigationManager NavManager
+@implements IAsyncDisposable
+
+<div class="page">
+    <main>
+        <div class="top-row">
+            <NavMenu />
+        </div>
+
+        <article class="content">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code {
+    private IJSObjectReference? module;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            NavManager.LocationChanged += OnLocationChanged;
+            await InitializeAutohideModuleAsync();
+        }
+    }
+
+    private async void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        await Task.Delay(50);
+        await InvokeAsync(InitializeAutohideModuleAsync);
+    }
+
+    private async Task InitializeAutohideModuleAsync()
+    {
+        try
+        {
+            if (module is null)
+            {
+                var path = $"./js/scrollTracker.js?v={DateTime.Now.Ticks}";
+                module = await JS.InvokeAsync<IJSObjectReference>("import", path);
+            }
+
+            await module.InvokeVoidAsync("initNavbarAutohide");
+        }
+        catch (Exception)
+        {
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        NavManager.LocationChanged -= OnLocationChanged;
+
+        if (module is not null)
+        {
+            try
+            {
+                await module.DisposeAsync();
+            }
+            catch (JSDisconnectedException) { }
+        }
+    }
+}
